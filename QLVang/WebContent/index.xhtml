@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" 
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta http-equiv="x-ua-compatible" content="ie=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<h:outputStylesheet library="css" name="common.css" />
+	<h:outputStylesheet library="css" name="w3.css"></h:outputStylesheet>
+	
+	<style>
+	</style>
+	
+	<title>Insert title here</title>
+</h:head>
+<h:body>
+<h:form id="form">
+	   <p:growl id="msgs" showDetail="true"/>
+	 
+	   <p:dataTable var="giaVang" value="#{capNhatGiaVangBean.loaiVangs}">
+ 
+    <p:column headerText="Year">
+        <h:outputText value="#{giaVang.loaiVang}" />
+    </p:column>
+ 
+    <p:column headerText="Brand">
+        <h:outputText value="#{giaVang.loaiVang}" />
+    </p:column>
+ 
+    <p:column headerText="Color">
+        <h:outputText value="#{giaVang.loaiVang}" />
+    </p:column>
+</p:dataTable>
+	   
+	   <table style="width:100%" class="w3-table" id="tablePrice">
+		  <tr>
+		    <th class="ui-widget-content ui-datatable-even"><p:commandLink value="Doi gia"></p:commandLink></th>
+		    <ui:repeat var="loaiVang" value="#{capNhatGiaVangBean.loaiVangs}">
+		    	<td><h:outputText value="#{loaiVang.loaiVang}" /></td>
+		    </ui:repeat>
+		  </tr>
+		  <tr>
+		    <th class="ui-state-default">GiaBan:</th>
+		    <ui:repeat var="loaiVang" value="#{capNhatGiaVangBean.loaiVangs}">
+		    	<td><h:outputText value="#{loaiVang.giaBan}" >
+		    		<f:convertNumber locale="vi_VN" pattern="###,###,###"></f:convertNumber>
+		    	</h:outputText>
+		    	</td>
+		    </ui:repeat>
+		  </tr>
+		  <tr>
+		    <th class="ui-state-default">GiaMua:</th>
+		    <ui:repeat var="loaiVang" value="#{capNhatGiaVangBean.loaiVangs}">
+		    	<td><h:outputText value="#{loaiVang.giaMua}" >
+		    		<f:convertNumber locale="vi_VN" pattern="###,###,###"></f:convertNumber>
+		    	</h:outputText>
+		    	</td>
+		    </ui:repeat>
+		  </tr>
+		</table>
+	   
+	   <!-- Action buttons -->
+	   <div class="w3-container w3-center">
+	   		<p:commandButton value="Mua Ban Trao Doi" styleClass="actionButton" action="MuaBanTraoDoi?faces-redirect=true"></p:commandButton>
+	   </div>
+   </h:form>
+
+	<h:outputScript library="js" name="common.js"></h:outputScript>
+	<script>
+		$("#tablePrice td:odd").addClass("ui-widget-content ui-datatable-odd");
+		$("#tablePrice td:even").addClass("ui-widget-content ui-datatable-even");
+	</script>
+</h:body>
+</html>

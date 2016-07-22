@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" 
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta http-equiv="x-ua-compatible" content="ie=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<h:outputStylesheet library="css" name="w3.css"></h:outputStylesheet>
+	<h:outputStylesheet library="css" name="common.css" />
+	
+	<style>
+		
+	</style>
+	
+	<title>Insert title here</title>
+</h:head>
+<h:body>
+	
+	<h:form id="form">
+	   <p:growl id="msgs" showDetail="true"/>
+	 
+	   <p:dataTable id="capNhatGiaVang" styleClass="w3-container" var="loaiVang" value="#{capNhatGiaVangBean.loaiVangs}" editable="true" editMode="cell" style="margin-bottom:20px">
+	       <f:facet name="header">
+	           Click to Edit
+	       </f:facet>
+	 
+	       <p:column headerText="STT" style="display:none">
+	           <p:cellEditor>
+	               <f:facet name="output"><h:outputText value="#{loaiVang.stt}" /></f:facet>
+	               <f:facet name="input"><p:inputText id="modelInput" value="#{loaiVang.stt}" style="width:100%;" styleClass="w3-sand" onfocus="$(this).select()"/></f:facet>
+	           </p:cellEditor>
+	       </p:column>
+	 
+	       <p:column headerText="LoaiVang">
+	           <p:cellEditor>
+	               <f:facet name="output"><h:outputText value="#{loaiVang.loaiVang}" /></f:facet>
+	               <f:facet name="input"><h:outputText value="#{loaiVang.loaiVang}" /></f:facet>
+	           </p:cellEditor>
+	       </p:column>
+	 
+	       <p:column headerText="GiaBan">
+	           <p:cellEditor>
+	               <f:facet name="output"><h:outputText value="#{loaiVang.giaBan}" /></f:facet>
+	               <f:facet name="input"><p:inputText value="#{loaiVang.giaBan}" style="width:100%" label="GiaBan" styleClass="w3-sand" onfocus="$(this).select()"/></f:facet>
+	           </p:cellEditor>
+	       </p:column>
+	 
+	       <p:column headerText="GiaMua">
+	           <p:cellEditor>
+	               <f:facet name="output"><h:outputText value="#{loaiVang.giaMua}" /></f:facet>
+	               <f:facet name="input"><p:inputText value="#{loaiVang.giaMua}" style="width:100%" label="GiaMua" styleClass="w3-sand" onfocus="$(this).select()"/></f:facet>
+	           </p:cellEditor>
+	       </p:column>
+	   </p:dataTable>
+	   
+	   <!-- Action buttons -->
+	   <div class="w3-container w3-center">
+	   		<p:commandButton value="Save" styleClass="actionButton"></p:commandButton>
+	   		<p:commandButton value="Back" styleClass="actionButton" action="MuaBanTraoDoi"></p:commandButton>
+	   </div>
+   </h:form>
+
+	<h:outputScript library="js" name="common.js"></h:outputScript>
+	<script>
+	</script>
+</h:body>
+</html>

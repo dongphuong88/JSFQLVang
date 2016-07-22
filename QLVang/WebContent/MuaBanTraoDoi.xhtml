@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" 
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta http-equiv="x-ua-compatible" content="ie=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<h:outputStylesheet library="css" name="w3.css"></h:outputStylesheet>
+	<h:outputStylesheet library="css" name="common.css" />
+	
+	<style>
+	.ui-selectonemenu{
+                    padding-right:0px;
+                }
+    .ui-selectonemenu .ui-selectonemenu-trigger {
+    	width:auto;
+    }
+	</style>
+	
+	<title>Insert title here</title>
+</h:head>
+<h:body>
+<h:form id="form">
+	<div class="w3-container">
+	<table style="width:100%" class="w3-table" id="tablePrice">
+		  <tr>
+		    <th class="ui-widget-content ui-datatable-even"><p:link value="Doi gia" outcome="CapNhatGiaVang"></p:link></th>
+		    <ui:repeat var="loaiVang" value="#{capNhatGiaVangBean.loaiVangs}">
+		    	<td><h:outputText value="#{loaiVang.loaiVang}" /></td>
+		    </ui:repeat>
+		  </tr>
+		  <tr>
+		    <th class="ui-state-default">GiaBan:</th>
+		    <ui:repeat var="loaiVang" value="#{capNhatGiaVangBean.loaiVangs}">
+		    	<td><h:outputText value="#{loaiVang.giaBan}" >
+		    		<f:convertNumber locale="vi_VN" pattern="###,###,###"></f:convertNumber>
+		    	</h:outputText>
+		    	</td>
+		    </ui:repeat>
+		  </tr>
+		  <tr>
+		    <th class="ui-state-default">GiaMua:</th>
+		    <ui:repeat var="loaiVang" value="#{capNhatGiaVangBean.loaiVangs}">
+		    	<td><h:outputText value="#{loaiVang.giaMua}" >
+		    		<f:convertNumber locale="vi_VN" pattern="###,###,###"></f:convertNumber>
+		    	</h:outputText>
+		    	</td>
+		    </ui:repeat>
+		  </tr>
+		</table>
+		
+	<div class="w3-container w3-half">
+		<p:dataTable var="buyItem" value="#{muaBanTraoDoiBean.buyList}" id="buyTable" emptyMessage="Khong co do mua">
+			<f:facet name="header">Mua</f:facet>
+			<p:column width="62" headerText="Xoa">
+				<p:commandButton icon="fa fa-close" update=":form:buyTable, form:total" actionListener="#{muaBanTraoDoiBean.buyDelete(buyItem)}"></p:commandButton>
+			</p:column>
+		    
+		    <p:column headerText="Loai Vang">
+		        <h:outputText value="#{buyItem.loaiVang}" />
+		    </p:column>
+		    
+		    <p:column headerText="Can Nang">
+		        <h:outputText value="#{buyItem.canNang}" >
+		        	<f:convertNumber pattern="###,###"></f:convertNumber>
+		        </h:outputText>
+		    </p:column>
+		 
+		    <p:column headerText="Tien Bu">
+		        <h:outputText value="#{buyItem.tienBuVang}" >
+		        	<f:convertNumber pattern="###,###"></f:convertNumber>
+		        </h:outputText>
+		    </p:column>
+		 
+		    <p:column headerText="Tong cong">
+		        <h:outputText value="#{buyItem.tongCong}" >
+		        	<f:convertNumber pattern="###,###"></f:convertNumber>
+		        </h:outputText>
+		    </p:column>
+		    <f:facet name="footer">
+				<p:commandButton value="Add Mua" onclick="PF('buyDialog').show();"></p:commandButton>
+			</f:facet>
+		</p:dataTable>
+	</div>
+	<div class="w3-container w3-half">
+		<p:dataTable var="sellItem" value="#{muaBanTraoDoiBean.sellList}" id="sellTable" emptyMessage="Khong co do ban">
+			<f:facet name="header">Ban</f:facet>
+			
+			<p:column width="62" headerText="Xoa">
+				<p:commandButton icon="fa fa-close" update=":form:sellTable, form:total" actionListener="#{muaBanTraoDoiBean.sellDelete(sellItem)}"></p:commandButton>
+			</p:column>
+			
+			<p:column headerText="Loai Vang">
+		        <h:outputText value="#{sellItem.loaiVang}" />
+		    </p:column>
+		    
+		    <p:column headerText="Can Nang">
+		        <h:outputText value="#{sellItem.canNang}" >
+		        	<f:convertNumber pattern="###,###"></f:convertNumber>
+		        </h:outputText>
+		    </p:column>
+		 
+		    <p:column headerText="Tien Cong">
+		        <h:outputText value="#{sellItem.tienCong}" >
+		        	<f:convertNumber pattern="###,###"></f:convertNumber>
+		        </h:outputText>
+		    </p:column>
+		 
+		    <p:column headerText="Tong Cong">
+		        <h:outputText value="#{sellItem.tongCong}" >
+		        	<f:convertNumber pattern="###,###"></f:convertNumber>
+		        </h:outputText>
+		    </p:column>
+		    
+		    <f:facet name="footer">
+				<p:commandButton value="Add Ban" onclick="PF('sellDialog').show();"></p:commandButton>
+			</f:facet>
+		</p:dataTable>
+	</div>
+	</div>
+	<div class="w3-container w3-center" style="width:25%; margin:auto">
+		<div class="ui-datatable-header ui-widget-header ui-corner-top">Tong Cong</div>
+		<div class="ui-widget-content ui-datatable-empty-message" style="height:50px;line-height: 50px;">
+			<h:outputLabel styleClass="w3-xlarge" value="#{muaBanTraoDoiBean.total}" id="total">
+				<f:convertNumber pattern="###,###"></f:convertNumber>
+			</h:outputLabel>
+		</div>
+	</div>
+
+	<p:dialog header="Add Mua" widgetVar="buyDialog" modal="true">
+		
+	    <h:panelGrid columns="2" cellpadding="5" id="buyDialogPanel">
+	    	<h:outputLabel for="buyLoaiVang" value="Loai Vang: "></h:outputLabel>
+	    	<p:selectOneMenu id="buyLoaiVang" value="#{muaBanTraoDoiBean.buyItem.loaiVang}" style="width:100%">
+	    		<f:selectItem itemLabel="Chon loai vang" itemValue="" noSelectionOption="true" />
+                <f:selectItems value="#{muaBanTraoDoiBean.loaiVangs}" />
+	    	</p:selectOneMenu>
+	    	
+	    	<h:outputLabel value="Can Nang: "></h:outputLabel>
+	    	<p:inputText type="number" value="#{muaBanTraoDoiBean.buyItem.canNang}" onfocus="$(this).select()"></p:inputText>
+	    	
+	    	<h:outputLabel value="Tien Bu Vang: "></h:outputLabel>
+	    	<p:inputText type="number" value="#{muaBanTraoDoiBean.buyItem.tienBuVang}" onfocus="$(this).select()" ></p:inputText>
+	    	
+	    </h:panelGrid>
+	    <div class="w3-center">
+	    	<p:commandButton value="Save" update="form:buyTable, form:buyDialogPanel, form:total" actionListener="#{muaBanTraoDoiBean.saveBuyDialog}" oncomplete="PF('buyDialog').hide();"></p:commandButton>
+	    	<p:commandButton value="Clear" update="form:buyDialogPanel" process="@this" actionListener="#{muaBanTraoDoiBean.resetBuyDialog}"></p:commandButton>
+	    </div>
+	</p:dialog> 
+	
+	<p:dialog header="Add Ban" widgetVar="sellDialog" modal="true">
+	    <h:panelGrid columns="2" cellpadding="5" id="sellDialogPanel">
+	    	<h:outputLabel for="sellLoaiVang" value="Loai Vang: "></h:outputLabel>
+	    	<p:selectOneMenu id="sellLoaiVang" value="#{muaBanTraoDoiBean.sellItem.loaiVang}" style="width:100%">
+	    		<f:selectItem itemLabel="Chon loai vang" itemValue="" noSelectionOption="true" />
+                <f:selectItems value="#{muaBanTraoDoiBean.loaiVangs}" />
+	    	</p:selectOneMenu>
+	    	
+	    	<h:outputLabel value="Can Nang: "></h:outputLabel>
+	    	<p:inputText type="number" value="#{muaBanTraoDoiBean.sellItem.canNang}" onfocus="$(this).select()"></p:inputText>
+	    	
+	    	<h:outputLabel value="Tien Cong: "></h:outputLabel>
+	    	<p:inputText type="number" value="#{muaBanTraoDoiBean.sellItem.tienCong}" onfocus="$(this).select()"></p:inputText>
+	    	
+	    </h:panelGrid>
+	    <div class="w3-center">
+	    	<p:commandButton value="Save" update="form:sellTable, form:sellDialogPanel, form:total" actionListener="#{muaBanTraoDoiBean.saveSellDialog}" oncomplete="PF('sellDialog').hide();"></p:commandButton>
+	    	<p:commandButton value="Clear" update="form:sellDialogPanel" process="@this" actionListener="#{muaBanTraoDoiBean.resetSellDialog}"></p:commandButton>
+	    </div>
+	</p:dialog> 
+</h:form>
+
+	<h:outputScript library="js" name="common.js"></h:outputScript>
+	<script>
+	$("#tablePrice td:odd").addClass("ui-widget-content ui-datatable-odd");
+	$("#tablePrice td:even").addClass("ui-widget-content ui-datatable-even");
+	</script>
+</h:body>
+</html>
